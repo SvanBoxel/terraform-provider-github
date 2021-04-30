@@ -79,6 +79,11 @@ func resourceGithubActionsOrganizationSecretCreateOrUpdate(d *schema.ResourceDat
 	} else if visibility != "selected" && hasSelectedRepositories {
 		return fmt.Errorf("Cannot use selected_repository_ids without visibility being set to selected")
 	}
+	if visibility == "selected" && !hasSelectedRepositories {
+		return fmt.Errorf("Cannot use visbility set to selected without selected_repository_ids")
+	} else if visibility != "selected" && hasSelectedRepositories {
+		return fmt.Errorf("Cannot use selected_repository_ids without visibility being set to selected")
+	}
 
 	selectedRepositoryIDs := []int64{}
 
